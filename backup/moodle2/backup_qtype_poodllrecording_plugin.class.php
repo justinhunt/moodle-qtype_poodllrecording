@@ -56,7 +56,7 @@ class backup_qtype_poodllrecording_plugin extends backup_qtype_plugin {
         $pluginwrapper->add_child($poodllrecording);
 
         // set source to populate the data
-        $poodllrecording->set_source_table('qtype_poodllrecording_options',
+        $poodllrecording->set_source_table('qtype_poodllrecording_opts',
                 array('questionid' => backup::VAR_PARENTID));
 
         // don't need to annotate ids nor files

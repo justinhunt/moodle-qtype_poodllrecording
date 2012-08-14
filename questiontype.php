@@ -82,6 +82,8 @@ class qtype_poodllrecording extends question_type {
         return array(
             'audio' => get_string('formataudio', 'qtype_poodllrecording'),
 			'video' => get_string('formatvideo', 'qtype_poodllrecording'),
+			'mp3' => get_string('formatmp3', 'qtype_poodllrecording'),
+			'picture' => get_string('formatpicture', 'qtype_poodllrecording')
         );
     }
 

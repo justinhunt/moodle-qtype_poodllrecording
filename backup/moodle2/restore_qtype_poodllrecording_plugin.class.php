@@ -60,7 +60,7 @@ class restore_qtype_poodllrecording_plugin extends restore_qtype_plugin {
         // qtype_poodllrecording too
         if ($questioncreated) {
             $data->questionid = $this->get_new_parentid('question');
-            $newitemid = $DB->insert_record('qtype_poodllrecording_options', $data);
+            $newitemid = $DB->insert_record('qtype_poodllrecording_opts', $data);
             $this->set_mapping('qtype_poodllrecording', $oldid, $newitemid);
         }
     }
@@ -70,7 +70,7 @@ class restore_qtype_poodllrecording_plugin extends restore_qtype_plugin {
      */
     public static function define_decode_contents() {
         return array(
-            new restore_decode_content('qtype_poodllrecording_options', 'graderinfo', 'qtype_poodllrecording'),
+            new restore_decode_content('qtype_poodllrecording_opts', 'graderinfo', 'qtype_poodllrecording'),
         );
     }
 
@@ -87,7 +87,7 @@ class restore_qtype_poodllrecording_plugin extends restore_qtype_plugin {
                      WHERE q.qtype = ?
                        AND NOT EXISTS (
                         SELECT 1
-                          FROM {qtype_poodllrecording_options}
+                          FROM {qtype_poodllrecording_opts}
                          WHERE questionid = q.id
                      )
                 ", array('poodllrecording'));
@@ -100,7 +100,7 @@ class restore_qtype_poodllrecording_plugin extends restore_qtype_plugin {
             $defaultoptions->attachments = 0;
             $defaultoptions->graderinfo = '';
             $defaultoptions->graderinfoformat = FORMAT_HTML;
-            $DB->insert_record('qtype_poodllrecording_options', $defaultoptions);
+            $DB->insert_record('qtype_poodllrecording_opts', $defaultoptions);
         }
     }
 }

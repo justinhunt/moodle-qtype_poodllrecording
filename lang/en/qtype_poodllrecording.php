@@ -27,6 +27,7 @@ $string['allowattachments'] = 'Allow attachments';
 $string['formateditor'] = 'HTML editor';
 $string['formatvideo'] = 'Video response';
 $string['formataudio'] = 'Audio response';
+$string['formatmp3'] = 'MP3 response';
 $string['formatpicture'] = 'Picture response';
 $string['graderinfo'] = 'Information for graders';
 $string['nlines'] = '{$a} lines';
