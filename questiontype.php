@@ -60,6 +60,20 @@ class qtype_poodllrecording extends question_type {
             $options->id = $DB->insert_record('qtype_poodllrecording_opts', $options);
         }
 
+	//"import_or_save_files" won't work, because it expects output from an editor which is an array with member itemid
+	//the filemanager doesn't produce this, so need to use file save draft area directly
+	//$options->backimage = $this->import_or_save_files($formdata->backimage,
+	// $context, 'qtype_poodllrecording', 'backimage', $formdata->id);
+	
+	file_save_draft_area_files($formdata->backimage, $context->id, 'qtype_poodllrecording',
+	'backimage', $formdata->id, array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
+	
+	//save the itemid of the backimage filearea
+	$options->backimage = $formdata->backimage;
+
+	//save the selected board size
+	$options->boardsize=$formdata->boardsize;
+    
         $options->responseformat = $formdata->responseformat;
 		$options->graderinfo = $this->import_or_save_files($formdata->graderinfo,
                 $context, 'qtype_poodllrecording', 'graderinfo', $formdata->id);
@@ -72,6 +86,8 @@ class qtype_poodllrecording extends question_type {
         $question->responseformat = $questiondata->options->responseformat;
 		$question->graderinfo = $questiondata->options->graderinfo;
         $question->graderinfoformat = $questiondata->options->graderinfoformat;
+	$question->backimage=$questiondata->options->backimage;
+$question->boardsize=$questiondata->options->boardsize;
     }
 
     /**
@@ -83,9 +99,27 @@ class qtype_poodllrecording extends question_type {
             'audio' => get_string('formataudio', 'qtype_poodllrecording'),
 			'video' => get_string('formatvideo', 'qtype_poodllrecording'),
 			'mp3' => get_string('formatmp3', 'qtype_poodllrecording'),
-			'picture' => get_string('formatpicture', 'qtype_poodllrecording')
+			'picture' => get_string('formatpicture', 'qtype_poodllrecording'),
         );
+       // 'simplepicture' => get_string('formatsimplepicture', 'qtype_poodllrecording')  
     }
+
+
+
+
+	/**
+	* @return array the different board sizes  that the whiteboard supports.
+	* internal name => human-readable name.
+	*/
+	public function board_sizes() {
+	return array(
+	'600x400' => get_string('x600x400', 'qtype_poodllrecording'),
+	'500x500' => get_string('x500x500', 'qtype_poodllrecording'),
+	'400x600' => get_string('x400x600', 'qtype_poodllrecording'),
+	'320x320' => get_string('x320x320', 'qtype_poodllrecording'),
+	'320x240' => get_string('x320x240', 'qtype_poodllrecording')
+	);
+	}
 
     /**
      * @return array the choices that should be offered for the input box size.
@@ -116,11 +150,14 @@ class qtype_poodllrecording extends question_type {
         $fs = get_file_storage();
         $fs->move_area_files_to_new_context($oldcontextid,
                 $newcontextid, 'qtype_poodllrecording', 'graderinfo', $questionid);
+        $fs->move_area_files_to_new_context($oldcontextid,
+                $newcontextid, 'qtype_poodllrecording', 'backimage', $questionid);
     }
 
     protected function delete_files($questionid, $contextid) {
         parent::delete_files($questionid, $contextid);
         $fs = get_file_storage();
         $fs->delete_area_files($contextid, 'qtype_poodllrecording', 'graderinfo', $questionid);
+        $fs->delete_area_files($contextid, 'qtype_poodllrecording', 'backimage', $questionid);
     }
 }

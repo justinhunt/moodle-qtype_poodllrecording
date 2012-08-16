@@ -303,7 +303,7 @@ class qtype_poodllrecording_format_video_renderer extends qtype_poodllrecording_
 }
 
 /**
- * An poodllrecording format renderer for poodllrecordings for picture *Not implemented yet Justin 20120214*
+ * An poodllrecording format renderer for poodllrecordings for whiteboard pictures
  *
  * @copyright  2012 Justin Hunt
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -352,10 +352,78 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
 		//our answerformat
 		$ret .= html_writer::empty_tag('input', array('type' => 'hidden','name' => $inputname . 'format', 'value' => 1));
 	
+		//get a handle on the question
+		$q = $qa->get_question();
 	
+		//Get Backimage, if we have one
+		// get file system handle for fetching url to submitted media prompt (if there is one) 
+		$fs = get_file_storage();
+		$files = $fs->get_area_files($q->contextid, 'qtype_poodllrecording', 'backimage', $q->id);
+		$imageurl="";
+		//$ret .= '<br />' . $q->id;
+		//$ret .= '<br />' . $context->id;
+		if($files && count($files)>0){
+			//this if for debugging purposes only
+			/*
+			foreach($files as $file){
+				$mediaurl = $qa->rewrite_pluginfile_urls('@@PLUGINFILE@@/' . $file->get_filename(), $file->get_component(),$file->get_filearea() , $file->get_itemid());
+				$ret .= '<br />' . $mediaurl;
+			}
+			*/
+		
+			$file = array_pop($files);
+			$imageurl = $qa->rewrite_pluginfile_urls('@@PLUGINFILE@@/' . $file->get_filename(), $file->get_component(),$file->get_filearea() , $file->get_itemid());
+		}//end of if
+		
+		//get board size
+		//NB the board size is the size of the drawing canvas, not the widget
+		$boardsize=$q->boardsize;
+		switch($boardsize){
+			case "400x600": $width=400;$height=600;break;
+			case "600x400": $width=600;$height=400;break;
+			case "500x500": $width=500;$height=500;break;
+			case "320x320": $width=320;$height=320;break;
+			case "320x240": $width=320;$height=240;break;
+		}
+		
+		
+		//for debugging purposes we just print this out here
+		//$ret .= $imageurl . " " . $boardsize . " ";
+		
 		//the context id is the user context for a student submission
-		return $ret . fetchWhiteboardForSubmission($inputid, $usercontextid ,'user','draft',$draftitemid);
+		return $ret . $this->prepareWhiteboard($inputid, $usercontextid ,'user','draft',$draftitemid,$width,$height,$imageurl);
 
+    }//end of function
+    
+    private function prepareWhiteboard($updatecontrol, $contextid,$component,$filearea,$itemid,$width=0,$height=0,$backimage=""){
+    	//compensation for borders and control panel
+    	//the board size is the size of the drawing canvas, not the widget
+    	$width = $width + 205;
+    	$height = $height + 20;
+    	$whiteboardString = fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$backimage);
+    	return $whiteboardString;
     }
 
-}
+}//end of class
+/**
+ * An poodllrecording format renderer for poodllrecordings for simple whiteboard picture 
+ *
+ * @copyright  2012 Justin Hunt
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class qtype_poodllrecording_format_simplepicture_renderer extends qtype_poodllrecording_format_picture_renderer {
+
+
+    protected function class_name() {
+        return 'qtype_poodllrecording_simplepicture';
+    }
+    
+    
+	private function prepareWhiteboard($updatecontrol, $contextid,$component,$filearea,$itemid,$width=0,$height=0,$backimage=""){
+    	$whiteboardString = fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$backimage);
+    	return $whiteboardString;
+    }
+}//end of class
+
+
+

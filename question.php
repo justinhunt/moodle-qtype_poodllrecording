@@ -94,7 +94,10 @@ class qtype_poodllrecording_question extends question_with_responses {
         if ($component == 'question' && $filearea == 'response_answer') {
 		   //since we will put files in respnse_answer, this is likely to be always true.
 		   return true;
-		 
+		  
+		  //if we are showing a whiteboard backimage, there is no need to restrict here
+		 } else if ($component == 'qtype_poodllrecording' && $filearea == 'backimage') {
+			return true;
 			
         } else if ($component == 'qtype_poodllrecording' && $filearea == 'graderinfo') {
             return $options->manualcomment;

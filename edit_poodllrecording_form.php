@@ -44,6 +44,13 @@ class qtype_poodllrecording_edit_form extends question_edit_form {
 
         $mform->addElement('editor', 'graderinfo', get_string('graderinfo', 'qtype_poodllrecording'),
                 array('rows' => 10), $this->editoroptions);
+
+		// added Justin 20120814 bgimage, part of whiteboard response
+		$mform->addElement('filemanager', 'backimage', get_string('backimage', 'qtype_poodllrecording'), null,array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
+		$mform->addElement('select', 'boardsize',
+			get_string('boardsize', 'qtype_poodllrecording'), $qtype->board_sizes());
+			$mform->setDefault('boardsize', 'editor');
+
     }
 
     protected function data_preprocessing($question) {
@@ -54,6 +61,21 @@ class qtype_poodllrecording_edit_form extends question_edit_form {
         $question->responseformat = $question->options->responseformat;
         $question->responsefieldlines = $question->options->responsefieldlines;
         $question->attachments = $question->options->attachments;
+
+		$question->boardsize=$question->options->boardsize;
+
+	//Set backimage details, and configure a draft area to accept any uploaded pictures
+	//all this and this whole method does, is to load existing files into a filearea
+	//so it is not called when creating a new question, only when editing an existing one
+
+	//best to use file_get_submitted_draft_itemid - because copying questions gets weird otherwise
+	//$draftitemid =$question->options->backimage;
+	$draftitemid = file_get_submitted_draft_itemid('backimage');
+
+	file_prepare_draft_area($draftitemid, $this->context->id, 'qtype_poodllrecording', 'backimage', 
+		!empty($question->id) ? (int) $question->id : null,
+		array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
+	$question->backimage = $draftitemid;
 
         $draftid = file_get_submitted_draft_itemid('graderinfo');
         $question->graderinfo = array();
