@@ -50,7 +50,7 @@ class backup_qtype_poodllrecording_plugin extends backup_qtype_plugin {
         // Now create the qtype own structures
         $poodllrecording = new backup_nested_element('poodllrecording', array('id'), array(
                 'responseformat', 'responsefieldlines', 'attachments',
-                'graderinfo', 'graderinfoformat'));
+                'graderinfo', 'graderinfoformat', 'backimage','boardsize'));
 
         // Now the own qtype tree
         $pluginwrapper->add_child($poodllrecording);
@@ -73,6 +73,7 @@ class backup_qtype_poodllrecording_plugin extends backup_qtype_plugin {
     public static function get_qtype_fileareas() {
         return array(
             'graderinfo' => 'question_created',
+			'backimage' => 'question_created'
         );
     }
 }

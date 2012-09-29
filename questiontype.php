@@ -113,11 +113,12 @@ $question->boardsize=$questiondata->options->boardsize;
 	*/
 	public function board_sizes() {
 	return array(
-	'600x400' => get_string('x600x400', 'qtype_poodllrecording'),
-	'500x500' => get_string('x500x500', 'qtype_poodllrecording'),
-	'400x600' => get_string('x400x600', 'qtype_poodllrecording'),
 	'320x320' => get_string('x320x320', 'qtype_poodllrecording'),
-	'320x240' => get_string('x320x240', 'qtype_poodllrecording')
+	'400x600' => get_string('x400x600', 'qtype_poodllrecording'),
+	'500x500' => get_string('x500x500', 'qtype_poodllrecording'),
+	'600x400' => get_string('x600x400', 'qtype_poodllrecording'),
+	'600x800' => get_string('x600x800', 'qtype_poodllrecording'),
+	'800x600' => get_string('x800x600', 'qtype_poodllrecording')
 	);
 	}
 

@@ -202,7 +202,7 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
 
 
 /**
- * An poodllrecording format renderer for poodllrecordings for MP3 via Paul Nichols MP3 recorder
+ * An poodllrecording format renderer for poodllrecordings for MP3 
  *
  * @copyright  2012 Justin Hunt
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -243,7 +243,7 @@ class qtype_poodllrecording_format_mp3_renderer extends qtype_poodllrecording_fo
 	
 	
 		//the context id is the user context for a student submission
-		return $ret . fetchMp3RecorderForSubmission($inputid, $usercontextid ,'user','draft',$draftitemid);
+		return $ret . fetchMP3RecorderForSubmission($inputid, $usercontextid ,'user','draft',$draftitemid);
 
     }
 }
@@ -379,11 +379,12 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
 		//NB the board size is the size of the drawing canvas, not the widget
 		$boardsize=$q->boardsize;
 		switch($boardsize){
-			case "400x600": $width=400;$height=600;break;
-			case "600x400": $width=600;$height=400;break;
-			case "500x500": $width=500;$height=500;break;
 			case "320x320": $width=320;$height=320;break;
-			case "320x240": $width=320;$height=240;break;
+			case "400x600": $width=400;$height=600;break;
+			case "500x500": $width=500;$height=500;break;
+			case "600x400": $width=600;$height=400;break;
+			case "600x800": $width=600;$height=800;break;
+			case "800x600": $width=800;$height=600;break;
 		}
 		
 		
