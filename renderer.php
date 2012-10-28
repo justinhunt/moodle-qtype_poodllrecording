@@ -162,7 +162,7 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
 			//return "path:" . $pathtofile ;
 			//return "path:" . $pathtofile . "<br />" . fetchSimpleAudioPlayer('swf',$pathtofile,"http",400,25);
 			if($pathtofile!=""){
-				 $files = fetchSimpleAudioPlayer('swf',$pathtofile,"http",400,25);
+				 $files = fetchSimpleAudioPlayer('auto',$pathtofile,"http",400,25);
 			}else{
 				$files = "No recording found";
 			}
@@ -271,7 +271,7 @@ class qtype_poodllrecording_format_video_renderer extends qtype_poodllrecording_
     			break;
     		}
 
-			return fetchSimpleVideoPlayer('swf',$pathtofile,400,380,"http");
+			return fetchSimpleVideoPlayer('auto',$pathtofile,400,380,"http");
 	
     }
 
