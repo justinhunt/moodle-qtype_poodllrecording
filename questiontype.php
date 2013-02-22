@@ -64,16 +64,24 @@ class qtype_poodllrecording extends question_type {
 	//the filemanager doesn't produce this, so need to use file save draft area directly
 	//$options->backimage = $this->import_or_save_files($formdata->backimage,
 	// $context, 'qtype_poodllrecording', 'backimage', $formdata->id);
+	if (isset($formdata->backimage)){
+		file_save_draft_area_files($formdata->backimage, $context->id, 'qtype_poodllrecording',
+		'backimage', $formdata->id, array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
+		
+		//save the itemid of the backimage filearea
+		$options->backimage = $formdata->backimage;
+	}else{
+		$options->backimage = null;
+	}
 	
-	file_save_draft_area_files($formdata->backimage, $context->id, 'qtype_poodllrecording',
-	'backimage', $formdata->id, array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
-	
-	//save the itemid of the backimage filearea
-	$options->backimage = $formdata->backimage;
 
 	//save the selected board size
-	$options->boardsize=$formdata->boardsize;
-    
+	if (isset($formdata->boardsize)){
+		$options->boardsize=$formdata->boardsize;
+    }else{
+		$options->boardsize="320x320";
+	}
+	
         $options->responseformat = $formdata->responseformat;
 		$options->graderinfo = $this->import_or_save_files($formdata->graderinfo,
                 $context, 'qtype_poodllrecording', 'graderinfo', $formdata->id);
@@ -96,9 +104,9 @@ $question->boardsize=$questiondata->options->boardsize;
      */
     public function response_formats() {
         return array(
+			'mp3' => get_string('formatmp3', 'qtype_poodllrecording'),
             'audio' => get_string('formataudio', 'qtype_poodllrecording'),
 			'video' => get_string('formatvideo', 'qtype_poodllrecording'),
-			'mp3' => get_string('formatmp3', 'qtype_poodllrecording'),
 			'picture' => get_string('formatpicture', 'qtype_poodllrecording'),
         );
        // 'simplepicture' => get_string('formatsimplepicture', 'qtype_poodllrecording')  

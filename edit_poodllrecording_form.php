@@ -50,6 +50,8 @@ class qtype_poodllrecording_edit_form extends question_edit_form {
 		$mform->addElement('select', 'boardsize',
 			get_string('boardsize', 'qtype_poodllrecording'), $qtype->board_sizes());
 			$mform->setDefault('boardsize', 'editor');
+		$mform->disabledIf('backimage', 'responseformat', 'ne', 'picture' );
+		$mform->disabledIf('boardsize', 'responseformat', 'ne', 'picture' );
 
     }
 

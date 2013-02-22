@@ -26,7 +26,7 @@
 $string['allowattachments'] = 'Allow attachments';
 $string['formateditor'] = 'HTML editor';
 $string['formatvideo'] = 'Video response';
-$string['formataudio'] = 'Audio response';
+$string['formataudio'] = 'Audio response(RTMP/Red5)';
 $string['formatmp3'] = 'MP3 response';
 $string['formatpicture'] = 'Picture response';
 $string['format simple picture'] = 'Simple Picture response';

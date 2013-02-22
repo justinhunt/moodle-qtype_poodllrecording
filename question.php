@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Essay question definition class.
+ * PoodLL Recording question definition class.
  *
  * @package    qtype
  * @subpackage poodllrecording
@@ -57,8 +57,15 @@ class qtype_poodllrecording_question extends question_with_responses {
 	*   to look for uploaded file URLs in the answer field
 	*/
     public function get_expected_data() {
-
-			$expecteddata = array('answer' => question_attempt::PARAM_CLEANHTML_FILES);
+		global $CFG;
+			//The API for this changed on this date 20120214 (possibly the previous release)
+			//checked it with version numbers. then used defined(const)
+			if (($CFG->version > 2012062504.05 && $CFG->version < 2012120300 )|| ($CFG->version > 2012120301.07)){
+			//if(defined(question_attempt::PARAM_RAW_FILES)){
+				$expecteddata = array('answer' => question_attempt::PARAM_RAW_FILES);
+			}else{
+				$expecteddata = array('answer' => question_attempt::PARAM_CLEANHTML_FILES);
+			}
 			$expecteddata['answerformat'] = PARAM_FORMAT;
 
         return $expecteddata;

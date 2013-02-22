@@ -124,6 +124,22 @@ function xmldb_qtype_poodllrecording_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2012081400, 'qtype', 'poodllrecording');
     
     }
+	
+	if ($oldversion < 2013022000) {
+    	// Define field questiontextformat to be added to question_order_sub
+        $table = new xmldb_table('qtype_poodllrecording_opts');
+		$field = new xmldb_field('boardsize', XMLDB_TYPE_TEXT, 'small', null, null, null, null, 'backimage');
+		
+		$dbman->change_field_type($table,$field);
+		$dbman->change_field_notnull($table,$field);
+		$dbman->change_field_default($table,$field);
+		
+		 // poodllrecording savepoint reached
+        upgrade_plugin_savepoint(true, 2013022000, 'qtype', 'poodllrecording');
+	}
+	
+	
+	
 
     return true;
 }
