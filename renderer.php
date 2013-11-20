@@ -199,9 +199,12 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
 					$ret .= get_string('currentresponse', 'qtype_poodllrecording');
 					$ret .= $currentresponse;
 		}
+		
+		//get a handle on the question
+		$q = $qa->get_question();
 	
 		//the context id is the user context for a student submission
-		return $ret . fetchAudioRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid);
+		return $ret . fetchAudioRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
 
     }
 }
@@ -250,8 +253,11 @@ class qtype_poodllrecording_format_mp3_renderer extends qtype_poodllrecording_fo
 					$ret .= $currentresponse;
 		}
 	
+		//get a handle on the question
+		$q = $qa->get_question();
+		
 		//the context id is the user context for a student submission
-		return $ret . fetchMP3RecorderForSubmission($inputid, $usercontextid ,'user','draft',$draftitemid);
+		return $ret . fetchMP3RecorderForSubmission($inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
 
     }
 }
@@ -316,9 +322,12 @@ class qtype_poodllrecording_format_video_renderer extends qtype_poodllrecording_
 					$ret .= get_string('currentresponse', 'qtype_poodllrecording');
 					$ret .= $currentresponse;
 		}
+		
+		//get a handle on the question
+		$q = $qa->get_question();
        
 		//the context id is the user context id
-		return $ret . fetchVideoRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid);
+		return $ret . fetchVideoRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
 		
     }
 }
@@ -432,10 +441,6 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
     }//end of function
     
     private function prepareWhiteboard($updatecontrol, $contextid,$component,$filearea,$itemid,$width=0,$height=0,$backimage=""){
-    	//compensation for borders and control panel
-    	//the board size is the size of the drawing canvas, not the widget
-    	$width = $width + 205;
-    	$height = $height + 20;
     	$whiteboardString = fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$backimage);
     	return $whiteboardString;
     }

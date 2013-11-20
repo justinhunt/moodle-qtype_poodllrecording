@@ -60,27 +60,34 @@ class qtype_poodllrecording extends question_type {
             $options->id = $DB->insert_record('qtype_poodllrecording_opts', $options);
         }
 
-	//"import_or_save_files" won't work, because it expects output from an editor which is an array with member itemid
-	//the filemanager doesn't produce this, so need to use file save draft area directly
-	//$options->backimage = $this->import_or_save_files($formdata->backimage,
-	// $context, 'qtype_poodllrecording', 'backimage', $formdata->id);
-	if (isset($formdata->backimage)){
-		file_save_draft_area_files($formdata->backimage, $context->id, 'qtype_poodllrecording',
-		'backimage', $formdata->id, array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
+		//"import_or_save_files" won't work, because it expects output from an editor which is an array with member itemid
+		//the filemanager doesn't produce this, so need to use file save draft area directly
+		//$options->backimage = $this->import_or_save_files($formdata->backimage,
+		// $context, 'qtype_poodllrecording', 'backimage', $formdata->id);
+		if (isset($formdata->backimage)){
+			file_save_draft_area_files($formdata->backimage, $context->id, 'qtype_poodllrecording',
+			'backimage', $formdata->id, array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
+			
+			//save the itemid of the backimage filearea
+			$options->backimage = $formdata->backimage;
+		}else{
+			$options->backimage = null;
+		}
 		
-		//save the itemid of the backimage filearea
-		$options->backimage = $formdata->backimage;
-	}else{
-		$options->backimage = null;
-	}
-	
 
-	//save the selected board size
-	if (isset($formdata->boardsize)){
-		$options->boardsize=$formdata->boardsize;
-    }else{
-		$options->boardsize="320x320";
-	}
+		//save the selected board size
+		if (isset($formdata->boardsize)){
+			$options->boardsize=$formdata->boardsize;
+		}else{
+			$options->boardsize="320x320";
+		}
+		
+		//if we have a recording time limit
+		if (isset($formdata->timelimit)){
+			$options->timelimit=$formdata->timelimit;
+		}else{
+			$options->timelimit=0;
+		}
 	
         $options->responseformat = $formdata->responseformat;
 		$options->graderinfo = $this->import_or_save_files($formdata->graderinfo,
@@ -94,8 +101,9 @@ class qtype_poodllrecording extends question_type {
         $question->responseformat = $questiondata->options->responseformat;
 		$question->graderinfo = $questiondata->options->graderinfo;
         $question->graderinfoformat = $questiondata->options->graderinfoformat;
-	$question->backimage=$questiondata->options->backimage;
-$question->boardsize=$questiondata->options->boardsize;
+		$question->backimage=$questiondata->options->backimage;
+		$question->boardsize=$questiondata->options->boardsize;
+		$question->timelimit=$questiondata->options->timelimit;
     }
 
     /**
@@ -183,7 +191,7 @@ $question->boardsize=$questiondata->options->boardsize;
     		"responseformat",
     		"responsefieldlines","attachments",
     		"graderinfo","graderinfoformat",
-    		"backimage","boardsize");
+    		"backimage","boardsize", "timelimit");
     		
         return $tableinfo;
     }
@@ -242,6 +250,8 @@ $question->boardsize=$questiondata->options->boardsize;
 				"</backimage>\n";
 		$expout .= "    <boardsize>" . $question->options->boardsize .
 				"</boardsize>\n";
+		$expout .= "    <timelimit>" . $question->options->timelimit .
+				"</timelimit>\n";
         
         return $expout;
         
@@ -280,6 +290,8 @@ $question->boardsize=$questiondata->options->boardsize;
                 array('#', 'backimage', '0', '#', 'file'), array()));
         $qo->boardsize = $format->getpath($q,
                 array('#', 'boardsize', 0, '#'), '320x320');
+		$qo->timelimit = $format->getpath($q,
+                array('#', 'timelimit', 0, '#'), 0);
         
 
         return $qo;

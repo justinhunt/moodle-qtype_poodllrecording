@@ -44,6 +44,11 @@ class qtype_poodllrecording_edit_form extends question_edit_form {
 
         $mform->addElement('editor', 'graderinfo', get_string('graderinfo', 'qtype_poodllrecording'),
                 array('rows' => 10), $this->editoroptions);
+				
+		//Add a place to set a maximum recording time.
+	   $mform->addElement('duration', 'timelimit', get_string('timelimit', 'qtype_poodllrecording'));    
+       $mform->setDefault('timelimit',0);
+	   $mform->disabledIf('timelimit', 'responseformat', 'eq', 'picture');
 
 		// added Justin 20120814 bgimage, part of whiteboard response
 		$mform->addElement('filemanager', 'backimage', get_string('backimage', 'qtype_poodllrecording'), null,array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
@@ -65,6 +70,9 @@ class qtype_poodllrecording_edit_form extends question_edit_form {
         $question->attachments = $question->options->attachments;
 
 		$question->boardsize=$question->options->boardsize;
+		$question->timelimit=$question->options->timelimit;
+
+
 
 	//Set backimage details, and configure a draft area to accept any uploaded pictures
 	//all this and this whole method does, is to load existing files into a filearea

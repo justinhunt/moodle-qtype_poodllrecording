@@ -51,4 +51,5 @@ $string['x800x600'] = '800 x 600';
 $string['x600x800'] = '600 x 800';
 $string['norecording'] = 'no recording found';
 $string['currentresponse'] = 'Current Response:<br />';
+$string['timelimit'] = 'Recording time limit';
 
