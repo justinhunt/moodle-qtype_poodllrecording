@@ -55,7 +55,8 @@ class qtype_poodllrecording_edit_form extends question_edit_form {
 		$mform->addElement('select', 'boardsize',
 			get_string('boardsize', 'qtype_poodllrecording'), $qtype->board_sizes());
 			$mform->setDefault('boardsize', 'editor');
-		$mform->disabledIf('backimage', 'responseformat', 'ne', 'picture' );
+		//commented out 20130120 was broken with moodle 2.6. Errors saying "you must not attach more than one files here" when tried to save, empty, disabled
+		//$mform->disabledIf('backimage', 'responseformat', 'ne', 'picture' );
 		$mform->disabledIf('boardsize', 'responseformat', 'ne', 'picture' );
 
     }
