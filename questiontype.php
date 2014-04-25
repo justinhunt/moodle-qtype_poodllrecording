@@ -267,6 +267,8 @@ class qtype_poodllrecording extends question_type {
      * If some of you fields contains id's you'll need to reimplement this
      */
     public function import_from_xml($data, $question, qformat_xml $format, $extra=null) {
+    global $CFG;
+    
         $question_type = "poodllrecording";
         
         //omit table name
@@ -294,7 +296,7 @@ class qtype_poodllrecording extends question_type {
     	
     	}else{
     		$qo->graderinfo =  $format->import_text_with_files($q, array('#', 'graderinfo', 0), '', $qo->questiontextformat);
-    		$qo->backimage = $format->import_files($format->getpath($q,
+    		$qo->backimage  = $format->import_files_as_draft($format->getpath($q,
                 array('#', 'backimage', '0', '#', 'file'), array()));
     		
     	}                     
