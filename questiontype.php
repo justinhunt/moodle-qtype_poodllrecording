@@ -280,14 +280,25 @@ class qtype_poodllrecording extends question_type {
                 array('#', 'responsefieldlines', 0, '#'), 15);
         $qo->attachments = $format->getpath($q,
                 array('#', 'attachments', 0, '#'), 0);
-        $qo->graderinfo['text'] = $format->getpath($q,
+        //older versions handled files diff. SeeM DL-39-57        
+    	if($CFG->version < 2013051400){
+    		$qo->graderinfo['text'] = $format->getpath($q,
                 array('#', 'graderinfo', 0, '#', 'text', 0, '#'), '', true);
-        $qo->graderinfo['format'] = $format->trans_format($format->getpath($q,
+        	$qo->graderinfo['format'] = $format->trans_format($format->getpath($q,
                 array('#', 'graderinfo', 0, '@', 'format'), $format->get_format($qo->questiontextformat)));
-        $qo->graderinfo['files'] = $format->import_files($format->getpath($q,
+        	$qo->graderinfo['files'] = $format->import_files($format->getpath($q,
                 array('#', 'graderinfo', '0', '#', 'file'), array()));
-        $qo->backimage['files'] = $format->import_files($format->getpath($q,
+                
+            $qo->backimage = $format->import_files($format->getpath($q,
                 array('#', 'backimage', '0', '#', 'file'), array()));
+    	
+    	}else{
+    		$qo->graderinfo =  $format->import_text_with_files($q, array('#', 'graderinfo', 0), '', $qo->questiontextformat);
+    		$qo->backimage = $format->import_files($format->getpath($q,
+                array('#', 'backimage', '0', '#', 'file'), array()));
+    		
+    	}                     
+        
         $qo->boardsize = $format->getpath($q,
                 array('#', 'boardsize', 0, '#'), '320x320');
 		$qo->timelimit = $format->getpath($q,
