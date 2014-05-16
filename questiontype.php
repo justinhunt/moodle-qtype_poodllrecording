@@ -202,32 +202,7 @@ class qtype_poodllrecording extends question_type {
      * Export question using information from extra_question_fields function
      * We override this because we need to export file fields as base 64 strings, not ids
      */
-    public function xexport_to_xml($question, qformat_xml $format, $extra=null) {
-        $extraquestionfields = $this->extra_question_fields();
-        if (!is_array($extraquestionfields)) {
-            return false;
-        }
-
-		//get file storage
-		$fs = get_file_storage();
-		
-        //omit table name
-        array_shift($extraquestionfields);
-        $expout='';
-        foreach ($extraquestionfields as $field) {
-        	if($field=='backimage'){
-        		$exportedvalue = $format->write_files($fs->get_area_files($question->contextid, 'qtype_poodllrecording',
-                        'backimage', $question->id));
-        	}else{
-            	$exportedvalue = $format->xml_escape($question->options->$field);
-            }
-            $expout .= "    <$field>{$exportedvalue}</$field>\n";
-        }
-        return $expout;
-    }
-    
     public function export_to_xml($question, qformat_xml $format, $extra=null) {
-       
 
 		//get file storage
 		$fs = get_file_storage();
@@ -254,10 +229,7 @@ class qtype_poodllrecording extends question_type {
 				"</timelimit>\n";
         
         return $expout;
-        
-        
-        
-        
+   
     }
     
         /*
@@ -311,40 +283,7 @@ class qtype_poodllrecording extends question_type {
 
     }//end of import from xml
 	
-    
-        /*
-     * Imports question from the Moodle XML format
-     *
-     * Imports question using information from extra_question_fields function
-     * If some of you fields contains id's you'll need to reimplement this
-     */
-    public function ximport_from_xml($data, $question, qformat_xml $format, $extra=null) {
-        $question_type = "poodllrecording";
-       
 
-        $extraquestionfields = $this->extra_question_fields();
-        if (!is_array($extraquestionfields)) {
-            return false;
-        }
-
-        //omit table name
-        array_shift($extraquestionfields);
-        $qo = $format->import_headers($data);
-        $qo->qtype = $question_type;
-
-        foreach ($extraquestionfields as $field) {
-        	if($field=='backimage'){
-        		//this probably wont work, it might save the file, but the id will not get stored in the backimage field
-        		//maybe do as we do in save_question_options above, see base 64 decode logic in questiontypebase.php import_file
-        		$qo->backimage['files'] = $format->import_files($format->getpath($question,
-                array('#', 'backimage', '0', '#', 'file'), array()));
-        	}else{
-            	$qo->$field = $format->getpath($data, array('#', $field, 0, '#'), '');
-            
-            } //end of if back image           
-        }//end of for each
-        return $qo;
-    }//end of import from xml
 	
 
 }
