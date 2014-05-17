@@ -125,7 +125,7 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
     
     public function response_area_read_only($name, $qa, $step, $lines, $context) {
 			//see if we have a file
-			$submittedfile = $this->get_submitted_file($name, $qa, $step, $lines, $context);
+			$submittedfile = $this->get_submitted_file($name, $qa, $step, $context);
 			
 			//if we do, we return the img link. If not, we return an empty string 
 			if($submittedfile){
@@ -262,7 +262,7 @@ class qtype_poodllrecording_format_video_renderer extends qtype_poodllrecording_
 
 	public function response_area_read_only($name, $qa, $step, $lines, $context) {
 			//see if we have a file
-			$submittedfile = $this->get_submitted_file($name, $qa, $step, $lines, $context);
+			$submittedfile = $this->get_submitted_file($name, $qa, $step, $context);
 			
 			//if we do, we return the img link. If not, we return an empty string 
 			if($submittedfile){
@@ -332,7 +332,7 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
 
     public function response_area_read_only($name, $qa, $step, $lines, $context) {
 			//see if we have a file
-			$submittedfile = $this->get_submitted_file($name, $qa, $step, $lines, $context);
+			$submittedfile = $this->get_submitted_file($name, $qa, $step, $context);
 			
 			//if we do, we return the img link. If not, we return an empty string 
 			if($submittedfile){
