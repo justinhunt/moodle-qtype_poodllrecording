@@ -336,11 +336,10 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
 			$returndata="";
 
                 
-			//get vectordata
-			$returndata.= 'vd:' . $step->get_qt_var($name . 'vectordata') . '<br/>';
-			
+			//get vectordata only show for debugging
+			//$returndata.= 'vd:' . $step->get_qt_var($name . 'vectordata') . '<br/>';
 			//get b64data
-			$returndata.= 'b64d:' . $step->get_qt_var($name . 'base64data') . '<br/>';
+			//$returndata.= 'b64d:' . $step->get_qt_var($name . 'base64data') . '<br/>';
 			
 			//if we do, we return the img link. If not, we return an empty string 
 			if($submittedfile){
@@ -425,7 +424,9 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
 			*/
 		
 			$file = array_pop($files);
-			$imageurl = $qa->rewrite_pluginfile_urls('@@PLUGINFILE@@/' . $file->get_filename(), $file->get_component(),$file->get_filearea() , $file->get_itemid());
+			if($file->get_filename() !="."){
+				$imageurl = $qa->rewrite_pluginfile_urls('@@PLUGINFILE@@/' . $file->get_filename(), $file->get_component(),$file->get_filearea() , $file->get_itemid());
+			}
 		}//end of if
 		
 		//get board size
