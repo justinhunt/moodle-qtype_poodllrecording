@@ -333,14 +333,24 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
     public function response_area_read_only($name, $qa, $step, $lines, $context) {
 			//see if we have a file
 			$submittedfile = $this->get_submitted_file($name, $qa, $step, $context);
+			$returndata="";
+
+                
+			//get vectordata
+			$returndata.= 'vd:' . $step->get_qt_var($name . 'vectordata') . '<br/>';
+			
+			//get b64data
+			$returndata.= 'b64d:' . $step->get_qt_var($name . 'base64data') . '<br/>';
 			
 			//if we do, we return the img link. If not, we return an empty string 
 			if($submittedfile){
 				$pathtofile= $qa->get_response_file_url($submittedfile);
-				return "<img src=\"" . $pathtofile . "\" />";
+				$returndata.= "<img src=\"" . $pathtofile . "\" />";
 			}else{
-				return "";
+				$returndata.= "";
 			}
+			
+			return $returndata;
     }
 
     public function response_area_input($name, $qa, $step, $lines, $context) {
@@ -376,6 +386,25 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
 		//our answerformat
 		$ret .= html_writer::empty_tag('input', array('type' => 'hidden','name' => $inputname . 'format', 'value' => 1));
 	
+		//the names of controls that will hold base64 and vector data
+		$vectorcontrol = $inputname . 'vectordata';
+		$base64control = $inputname . 'base64data';
+		
+		//if we have a previous drawing this is the vectordata we need to restore
+		//we don't need to restore base64 data. That is saved as a file.
+		//NB $inputname is what is used on htmlpage, $name is name of field for php data access
+		$vectordata = $step->get_qt_var($name . 'vectordata');
+		if(!$vectordata){
+			$vectordata='';
+		}
+		//output vectordata control and load it with data
+		//whiteboard doesn't read data from here, but we stash it to be sure it is
+		//resubmitted when user transitions page without touching whiteboard.
+		$ret .= html_writer::empty_tag('input', array('type' => 'hidden','id'=>$vectorcontrol,'name' => $vectorcontrol, 'value' => $vectordata));	
+		
+		//output base64data control
+		$ret .= html_writer::empty_tag('input', array('type' => 'hidden','id'=>$base64control,'name' => $base64control, 'value' => ''));
+		
 		//get a handle on the question
 		$q = $qa->get_question();
 	
@@ -416,18 +445,21 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
 		//$ret .= $imageurl . " " . $boardsize . " ";
 		
 		//if we already have a response, lets display it so the student  can check/decide to rerecord
+		//we no longer need this since we restore vector data in the whiteboard. Justin 20140522
+		/*
 		if($submittedfile){
 			$ret .= get_string('currentresponse', 'qtype_poodllrecording');
 			$ret .= "<img src=\"" . $qa->get_response_file_url($submittedfile) . "\" />";
 		}
+		*/
 		
 		//the context id is the user context for a student submission
-		return $ret . $this->prepareWhiteboard($inputid, $usercontextid ,'user','draft',$draftitemid,$width,$height,$imageurl);
+		return $ret . $this->prepareWhiteboard($inputid, $usercontextid ,'user','draft',$draftitemid,$width,$height,$imageurl,$vectorcontrol, $vectordata);
 
     }//end of function
     
-    private function prepareWhiteboard($updatecontrol, $contextid,$component,$filearea,$itemid,$width=0,$height=0,$backimage=""){
-    	$whiteboardString = fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$backimage);
+    private function prepareWhiteboard($updatecontrol, $contextid,$component,$filearea,$itemid,$width=0,$height=0,$backimage="",$vectorcontrol,$vectordata){
+    	$whiteboardString = fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$backimage,'','',$vectorcontrol,$vectordata);
     	return $whiteboardString;
     }
 

@@ -66,6 +66,10 @@ class qtype_poodllrecording_question extends question_with_responses {
 				$expecteddata = array('answer' => question_attempt::PARAM_CLEANHTML_FILES);
 			}
 			$expecteddata['answerformat'] = PARAM_FORMAT;
+			
+			//base64 data and data for whiteboard
+			$expecteddata['answervectordata'] = PARAM_TEXT;
+			$expecteddata['answerbase64data'] = PARAM_TEXT;
 
         return $expecteddata;
     }
