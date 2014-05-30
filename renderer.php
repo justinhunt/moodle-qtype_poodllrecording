@@ -446,13 +446,13 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
 		//$ret .= $imageurl . " " . $boardsize . " ";
 		
 		//if we already have a response, lets display it so the student  can check/decide to rerecord
-		//we no longer need this since we restore vector data in the whiteboard. Justin 20140522
-		/*
-		if($submittedfile){
+		//we no longer need this if we have vector data in the whiteboard. DB and LC but not PDL Justin 20140522
+		/* */
+		if($submittedfile && $vectordata==''){
 			$ret .= get_string('currentresponse', 'qtype_poodllrecording');
 			$ret .= "<img src=\"" . $qa->get_response_file_url($submittedfile) . "\" />";
 		}
-		*/
+		
 		
 		//the context id is the user context for a student submission
 		return $ret . $this->prepareWhiteboard($inputid, $usercontextid ,'user','draft',$draftitemid,$width,$height,$imageurl,$vectorcontrol, $vectordata);
