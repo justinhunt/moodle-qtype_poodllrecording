@@ -48,8 +48,11 @@ class qtype_poodllrecording_question extends question_with_responses {
      * @return qtype_poodllrecording_format_renderer_base the response-format-specific renderer.
      */
     public function get_format_renderer(moodle_page $page) {
+		//Nadav reported a possible problem here, I can't reproduce it, but hope this fixes it.
+		//https://github.com/justinhunt/moodle-qtype_poodllrecording/issues/1
+		if ($this->responseformat == 'editor') $this->responseformat = 'picture'; 
+		
         return $page->get_renderer('qtype_poodllrecording', 'format_' . $this->responseformat);
-      // return $page->get_renderer('qtype_poodllrecording', 'format_video');
     }
 	
 	/**
