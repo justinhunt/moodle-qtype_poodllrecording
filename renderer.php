@@ -25,8 +25,7 @@
 
 
 defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot . '/filter/poodll/poodllresourcelib.php');
-require_once($CFG->dirroot . '/filter/poodll/poodllfilelib.php');
+//require_once($CFG->dirroot . '/filter/poodll/poodllfilelib.php');
 
 /**
  * Generates the output for poodllrecording questions.
@@ -130,7 +129,7 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
 			//if we do, we return the img link. If not, we return an empty string 
 			if($submittedfile){
 				$pathtofile= $qa->get_response_file_url($submittedfile);
-				return fetchSimpleAudioPlayer('auto',$pathtofile,"http",400,25);
+				return  \filter_poodll\poodlltools::fetchSimpleAudioPlayer('auto',$pathtofile,"http",400,25);
 			}else{
 				return "";
 			}
@@ -171,7 +170,7 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
 		//if we already have a response, lets display so the student  can check/decide to rerecord
 		if($submittedfile){
 			$ret .= get_string('currentresponse', 'qtype_poodllrecording');
-			$ret .= fetchSimpleAudioPlayer('auto',$qa->get_response_file_url($submittedfile),"http",400,25); 
+			$ret .=  \filter_poodll\poodlltools::fetchSimpleAudioPlayer('auto',$qa->get_response_file_url($submittedfile),"http",400,25);
 		}
 	
 		
@@ -179,7 +178,7 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
 		$q = $qa->get_question();
 	
 		//the context id is the user context for a student submission
-		return $ret . fetchAudioRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
+		return $ret . \filter_poodll\poodlltools::fetchAudioRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
 
     }
 }
@@ -234,14 +233,14 @@ class qtype_poodllrecording_format_mp3_renderer extends qtype_poodllrecording_fo
 		//if we already have a response, lets display it so the student  can check/decide to rerecord
 		if($submittedfile){
 			$ret .= get_string('currentresponse', 'qtype_poodllrecording');
-			$ret .= fetchSimpleAudioPlayer('auto',$qa->get_response_file_url($submittedfile),"http",400,25); 
+			$ret .=  \filter_poodll\poodlltools::fetchSimpleAudioPlayer('auto',$qa->get_response_file_url($submittedfile),"http",400,25);
 		}
 	
 		//get a handle on the question
 		$q = $qa->get_question();
 		
 		//the context id is the user context for a student submission
-		return $ret . fetchMP3RecorderForSubmission($inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
+		return $ret . \filter_poodll\poodlltools::fetchMP3RecorderForSubmission($inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
 
     }
 }
@@ -267,7 +266,7 @@ class qtype_poodllrecording_format_video_renderer extends qtype_poodllrecording_
 			//if we do, we return the img link. If not, we return an empty string 
 			if($submittedfile){
 				$pathtofile= $qa->get_response_file_url($submittedfile);
-				return fetchSimpleVideoPlayer('auto',$pathtofile,400,380,"http");
+				return  \filter_poodll\poodlltools::fetchSimpleVideoPlayer('auto',$pathtofile,400,380,"http");
 			}else{
 				return "";
 			}
@@ -305,14 +304,14 @@ class qtype_poodllrecording_format_video_renderer extends qtype_poodllrecording_
 		//if we already have a response, lets display it so the student  can check/decide to rerecord
 		if($submittedfile){
 			$ret .= get_string('currentresponse', 'qtype_poodllrecording');
-			$ret .= fetchSimpleVideoPlayer('auto',$qa->get_response_file_url($submittedfile),400,380,"http");
+			$ret .=  \filter_poodll\poodlltools::fetchSimpleVideoPlayer('auto',$qa->get_response_file_url($submittedfile),400,380,"http");
 		}
 		
 		//get a handle on the question
 		$q = $qa->get_question();
        
 		//the context id is the user context id
-		return $ret . fetchVideoRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
+		return $ret . \filter_poodll\poodlltools::fetchVideoRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
 		
     }
 }
@@ -460,7 +459,7 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
     }//end of function
     
     private function prepareWhiteboard($updatecontrol, $contextid,$component,$filearea,$itemid,$width=0,$height=0,$backimage="",$vectorcontrol,$vectordata){
-    	$whiteboardString = fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$backimage,'','',$vectorcontrol,$vectordata);
+    	$whiteboardString = \filter_poodll\poodlltools::fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$backimage,'','',$vectorcontrol,$vectordata);
     	return $whiteboardString;
     }
 
@@ -480,7 +479,7 @@ class qtype_poodllrecording_format_simplepicture_renderer extends qtype_poodllre
     
     
 	private function prepareWhiteboard($updatecontrol, $contextid,$component,$filearea,$itemid,$width=0,$height=0,$backimage=""){
-    	$whiteboardString = fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$backimage);
+    	$whiteboardString = \filter_poodll\poodlltools::fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$backimage);
     	return $whiteboardString;
     }
 }//end of class
