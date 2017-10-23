@@ -1,5 +1,8 @@
 Change List
 =========
+Version 2017102301
+Fixed bug where the question installer does not use the new field name qresource, and instead uses backimage
+
 Version 2017100301
 Removed mp3 recording format to leave just audio, video and picture
 Made prep for new question resource setting
