@@ -164,7 +164,7 @@ function xmldb_qtype_poodllrecording_upgrade($oldversion) {
         }
 
         // poodllrecording savepoint reached
-        upgrade_plugin_savepoint(true, 2017100301, 'qtype', 'poodllrecording');
+        upgrade_plugin_savepoint(true, 2017102301, 'qtype', 'poodllrecording');
 
     }
 
