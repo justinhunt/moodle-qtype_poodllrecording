@@ -152,7 +152,7 @@ function xmldb_qtype_poodllrecording_upgrade($oldversion) {
 		
 	}
 
-    if($oldversion < 2017100301){
+    if($oldversion < 2017102301){
 
         $DB->set_field('qtype_poodllrecording_opts','responseformat','audio',array('responseformat'=>'mp3'));
 
