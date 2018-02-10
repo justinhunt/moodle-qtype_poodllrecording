@@ -156,7 +156,6 @@ function xmldb_qtype_poodllrecording_upgrade($oldversion) {
 
         $DB->set_field('qtype_poodllrecording_opts','responseformat','audio',array('responseformat'=>'mp3'));
 
-        //considered changing name to qresource, but worried about files in filearea if we changed name
         $table = new xmldb_table('qtype_poodllrecording_opts');
         $field = new xmldb_field( 'backimage', XMLDB_TYPE_TEXT, 'small', null, null, null, null);
         if ($dbman->field_exists($table, $field)) {

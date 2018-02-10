@@ -70,8 +70,8 @@ class restore_qtype_poodllrecording_plugin extends restore_qtype_plugin {
      */
     public static function define_decode_contents() {
         return array(
-            new restore_decode_content('qtype_poodllrecording_opts', \qtype_poodllrecording\constants::FILEAREA_GRADERINFO,
-                \qtype_poodllrecording\constants::FILEAREA_QRESOURCE,'qtype_poodllrecording'),
+            new restore_decode_content('qtype_poodllrecording_opts', array(\qtype_poodllrecording\constants::FILEAREA_GRADERINFO,
+                'qresource'),'qtype_poodllrecording')
         );
     }
 

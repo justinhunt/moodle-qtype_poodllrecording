@@ -1,5 +1,9 @@
 Change List
 =========
+
+Version 2018020501
+Fixed bug in restore logic where backimage had not been renamed to qresource
+
 Version 2017102301
 Fixed bug where the question installer does not use the new field name qresource, and instead uses backimage
 
