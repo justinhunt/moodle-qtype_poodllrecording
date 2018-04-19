@@ -1,5 +1,7 @@
 Change List
 =========
+Version 3.1.0(Build 2018041000)
+-Implemented new Moodle Privacy API
 
 Version 2018020501
 Fixed bug in restore logic where backimage had not been renamed to qresource

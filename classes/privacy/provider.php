@@ -15,19 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for filter Poodll.
+ * Privacy Subsystem implementation for Question Poodll recording.
  *
- * @package    filter_poodll
+ * @package    qtype_poodllrecording
  * @copyright  2018 Justin Hunt https://poodll.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace filter_poodll\privacy;
+namespace qtype_poodllrecording\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Privacy Subsystem for filter_poodll implementing null_provider.
+ * Privacy Subsystem for qtype_poodllrecording implementing null_provider.
  *
  * @copyright  2018 Justin Hunt https://poodll.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
