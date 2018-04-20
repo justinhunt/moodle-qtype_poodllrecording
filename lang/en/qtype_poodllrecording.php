@@ -51,4 +51,4 @@ $string['x600x800'] = '600 x 800';
 $string['norecording'] = 'no recording found';
 $string['currentresponse'] = 'Current Response:<br />';
 $string['timelimit'] = 'Recording time limit';
-
+$string['privacy:metadata'] = 'The Poodll Recording Question plugin does store personal data.';
