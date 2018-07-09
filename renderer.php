@@ -178,7 +178,9 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
 		$q = $qa->get_question();
 	
 		//the context id is the user context for a student submission
-		return $ret . \filter_poodll\poodlltools::fetchAudioRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
+        $hints = array();
+        $hints['modulecontextid'] =  $context->id;
+		return $ret . \filter_poodll\poodlltools::fetchAudioRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit,false,$hints);
 
     }
 }
@@ -311,7 +313,9 @@ class qtype_poodllrecording_format_video_renderer extends qtype_poodllrecording_
 		$q = $qa->get_question();
        
 		//the context id is the user context id
-		return $ret . \filter_poodll\poodlltools::fetchVideoRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit);
+        $hints = array();
+        $hints['modulecontextid'] =  $context->id;
+		return $ret . \filter_poodll\poodlltools::fetchVideoRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit,false,$hints);
 		
     }
 }
