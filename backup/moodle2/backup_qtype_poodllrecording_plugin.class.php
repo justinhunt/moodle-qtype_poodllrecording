@@ -50,7 +50,7 @@ class backup_qtype_poodllrecording_plugin extends backup_qtype_plugin {
         // Now create the qtype own structures
         $poodllrecording = new backup_nested_element('poodllrecording', array('id'), array(
                 'responseformat', 'responsefieldlines', 'attachments',
-                'graderinfo', 'graderinfoformat', 'qresource','boardsize'));
+                'graderinfo', 'graderinfoformat', 'qresource','boardsize','timelimit'));
 
         // Now the own qtype tree
         $pluginwrapper->add_child($poodllrecording);

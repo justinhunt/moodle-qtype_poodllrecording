@@ -103,6 +103,7 @@ class restore_qtype_poodllrecording_plugin extends restore_qtype_plugin {
 			$defaultoptions->qresource = '';
 			$defaultoptions->boardsize = '320x320';
             $defaultoptions->graderinfoformat = FORMAT_HTML;
+            $defaultoptions->timelimit = 0;
             $DB->insert_record('qtype_poodllrecording_opts', $defaultoptions);
         }
     }
