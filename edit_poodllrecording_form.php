@@ -26,6 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+use qtype_poodllrecording\constants;
+
 
 /**
  * PoodLL Recording question type editing form.
@@ -38,22 +40,40 @@ class qtype_poodllrecording_edit_form extends question_edit_form {
     protected function definition_inner($mform) {
         $qtype = question_bank::get_qtype('poodllrecording');
 
-        $mform->addElement('select', 'responseformat',
-                get_string('responseformat', 'qtype_poodllrecording'), $qtype->response_formats());
-        $mform->setDefault('responseformat', 'editor');
-
-        $mform->addElement('editor', 'graderinfo', get_string('graderinfo', 'qtype_poodllrecording'),
+        $mform->addElement('editor', 'graderinfo', get_string('graderinfo', constants::M_COMP),
                 array('rows' => 10), $this->editoroptions);
+
+        //get allowed recorders from admin settings
+        $allowed_recorders = get_config(constants::M_COMP, 'allowedrecorders');
+        $allowed_recorders  = explode(',',$allowed_recorders);
+        $recorderoptions = array();
+        if(array_search(constants::RESPONSEFORMAT_AUDIO,$allowed_recorders)!==false){
+            $recorderoptions[constants::RESPONSEFORMAT_AUDIO] = get_string("formataudio", constants::M_COMP);
+        }
+        if(array_search(constants::RESPONSEFORMAT_VIDEO,$allowed_recorders)!==false){
+            $recorderoptions[constants::RESPONSEFORMAT_VIDEO] = get_string("formatvideo", constants::M_COMP);
+        }
+        if(array_search(constants::RESPONSEFORMAT_PICTURE,$allowed_recorders)!==false){
+            $recorderoptions[constants::RESPONSEFORMAT_PICTURE] = get_string("formatpicture", constants::M_COMP);
+        }
+        if(count($recorderoptions)<1){
+            //its not meaningful to have all recorders disabled at admin level,
+            // but we need to respond to such a situation, so we show whiteboard
+            $recorderoptions[constants::RESPONSEFORMAT_PICTURE] = get_string("formatpicture", constants::M_COMP);
+        }
+        $mform->addElement('select', 'responseformat',
+                get_string('responseformat', constants::M_COMP), $recorderoptions);
+        $mform->setDefault('responseformat', 'audio');
 				
 		//Add a place to set a maximum recording time.
-	   $mform->addElement('duration', 'timelimit', get_string('timelimit', 'qtype_poodllrecording'));    
+	   $mform->addElement('duration', 'timelimit', get_string('timelimit', constants::M_COMP));
        $mform->setDefault('timelimit',0);
 	   $mform->disabledIf('timelimit', 'responseformat', 'eq', 'picture');
 
 		// added Justin 20120814 bgimage, part of whiteboard response
-		$mform->addElement('filemanager', 'qresource', get_string('qresource', 'qtype_poodllrecording'), null,array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
+		$mform->addElement('filemanager', 'qresource', get_string('qresource', constants::M_COMP), null,array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
 		$mform->addElement('select', 'boardsize',
-			get_string('boardsize', 'qtype_poodllrecording'), $qtype->board_sizes());
+			get_string('boardsize', constants::M_COMP), $qtype->board_sizes());
 			$mform->setDefault('boardsize', 'editor');
 		$mform->disabledIf('boardsize', 'responseformat', 'ne', 'picture' );
 
@@ -81,7 +101,7 @@ class qtype_poodllrecording_edit_form extends question_edit_form {
 	//$draftitemid =$question->options->backimage;
 	$draftitemid = file_get_submitted_draft_itemid(\qtype_poodllrecording\constants::FILEAREA_QRESOURCE);
 
-	file_prepare_draft_area($draftitemid, $this->context->id, 'qtype_poodllrecording', \qtype_poodllrecording\constants::FILEAREA_QRESOURCE,
+	file_prepare_draft_area($draftitemid, $this->context->id, constants::M_COMP, \qtype_poodllrecording\constants::FILEAREA_QRESOURCE,
 		!empty($question->id) ? (int) $question->id : null,
 		array('subdirs' => 0, 'maxbytes' => 0, 'maxfiles' => 1));
 	$question->qresource = $draftitemid;
@@ -91,7 +111,7 @@ class qtype_poodllrecording_edit_form extends question_edit_form {
         $question->graderinfo['text'] = file_prepare_draft_area(
             $draftid,           // draftid
             $this->context->id, // context
-            'qtype_poodllrecording',      // component
+            constants::M_COMP,      // component
             \qtype_poodllrecording\constants::FILEAREA_GRADERINFO,       // filarea
             !empty($question->id) ? (int) $question->id : null, // itemid
             $this->fileoptions, // options

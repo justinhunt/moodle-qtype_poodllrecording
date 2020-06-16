@@ -15,20 +15,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information for the poodllrecording question type.
  *
- * @package    qtype
- * @subpackage poodllrecording
- * @copyright  2012 Justin Hunt
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * @package   qtype_poodllrecording
+ * @copyright 2020 Justin Hunt {@link http://www.poodll.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+namespace qtype_poodllrecording;
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2020061600;
-$plugin->requires  = 2016052300;//moodle 3.1.0
-$plugin->component = 'qtype_poodllrecording';
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '3.1.03(Build 2020061600)';
-$plugin->dependencies = array('filter_poodll' => 2016081401);
+class utils {
 
+    public static function fetch_options_recorders() {
+        $rec_options = array(
+                constants::RESPONSEFORMAT_AUDIO => get_string('formataudio', constants::M_COMP),
+                constants::RESPONSEFORMAT_VIDEO => get_string('formatvideo', constants::M_COMP),
+                constants::RESPONSEFORMAT_PICTURE => get_string('formatpicture', constants::M_COMP),
+        );
+        return $rec_options;
+    }
+
+
+}

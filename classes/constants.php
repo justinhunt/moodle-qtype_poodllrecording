@@ -10,6 +10,7 @@ namespace qtype_poodllrecording;
  */
 class constants
 {
+    const M_COMP='qtype_poodllrecording';
     const RESPONSEFORMAT_AUDIO='audio';
     const RESPONSEFORMAT_EDITOR='editor';
     const RESPONSEFORMAT_MP3='mp3';

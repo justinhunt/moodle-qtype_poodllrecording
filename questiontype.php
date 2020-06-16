@@ -112,12 +112,7 @@ class qtype_poodllrecording extends question_type {
      * internal name => human-readable name.
      */
     public function response_formats() {
-        return array(
-            'audio' => get_string('formataudio', 'qtype_poodllrecording'),
-			'video' => get_string('formatvideo', 'qtype_poodllrecording'),
-			'picture' => get_string('formatpicture', 'qtype_poodllrecording'),
-        );
-       // 'simplepicture' => get_string('formatsimplepicture', 'qtype_poodllrecording')  
+        return \qtype_poodllrecording\utils::fetch_options_recorders();
     }
 
 

@@ -1,5 +1,8 @@
 Change List
 =========
+Version 3.1.03(Build 2020041000)
+-made it possible to check usable recorders from the admin settings
+
 Version 3.1.02(Build 2019062000)
 -Added timelimit setting to backup/restore [thanks Angelo Calo for bug report]
 
