@@ -1,5 +1,8 @@
 Change List
 =========
+Version 3.1.04(Build 2020101700)
+-added event for external js to listen to (for use in safequizsave block)
+
 Version 3.1.03(Build 2020041000)
 -made it possible to check usable recorders from the admin settings
 

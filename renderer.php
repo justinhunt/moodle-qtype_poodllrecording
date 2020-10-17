@@ -136,7 +136,7 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
     }
 
     public function response_area_input($name, $qa, $step, $lines, $context) {
-    	global $USER;
+    	global $USER, $PAGE;
     	$usercontextid=context_user::instance($USER->id)->id;
     	
 		//prepare a draft file id for use
@@ -180,7 +180,9 @@ class qtype_poodllrecording_format_audio_renderer extends plugin_renderer_base {
 		//the context id is the user context for a student submission
         $hints = array();
         $hints['modulecontextid'] =  $context->id;
-		return $ret . \filter_poodll\poodlltools::fetchAudioRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit,false,$hints);
+        $callback="prquestion";
+        $PAGE->requires->js_call_amd('qtype_poodllrecording/poodllhelper', 'init', array());
+		return $ret . \filter_poodll\poodlltools::fetchAudioRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit,$callback,$hints);
 
     }
 }
