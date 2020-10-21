@@ -1,5 +1,8 @@
 Change List
 =========
+Version 3.1.05(Build 2020102200)
+-Fixed broken filename save with attempt (bug introduced in v3.1.04 Build 2020101700 )
+
 Version 3.1.04(Build 2020101700)
 -added event for external js to listen to (for use in safequizsave block)
 
