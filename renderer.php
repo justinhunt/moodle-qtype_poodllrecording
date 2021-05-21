@@ -322,7 +322,6 @@ class qtype_poodllrecording_format_video_renderer extends qtype_poodllrecording_
         $opts = array('safesave' => $q->safesave);
         $PAGE->requires->js_call_amd('qtype_poodllrecording/poodllhelper', 'init', array($opts));
 		return $ret . \filter_poodll\poodlltools::fetchVideoRecorderForSubmission('swf','question',$inputid, $usercontextid ,'user','draft',$draftitemid,$q->timelimit,$callback,$hints);
-		
     }
 }
 
