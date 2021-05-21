@@ -21,6 +21,7 @@ define(["jquery", "core/log"], function ($, log) {
                             //if opts safe save
                             if(opts.safesave==1) {
                                 var nextbtn = $('.submitbtns .mod_quiz-next-nav');
+                                nextbtn.removeClass('qtype_poodllrecording_disabledbtn');
                                 nextbtn.removeAttr('disabled', 'disabled');
                             }
 
@@ -46,6 +47,7 @@ define(["jquery", "core/log"], function ($, log) {
                             //if opts safe save
                             if(opts.safesave==1) {
                                 var savebtn = $('.submitbtns .mod_quiz-next-nav');
+                                savebtn.addClass('qtype_poodllrecording_disabledbtn');
                                 savebtn.attr('disabled', 'disabled');
                             }
 
