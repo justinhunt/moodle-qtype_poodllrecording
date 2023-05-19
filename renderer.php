@@ -470,7 +470,7 @@ class qtype_poodllrecording_format_picture_renderer extends qtype_poodllrecordin
 
     }//end of function
     
-    private function prepareWhiteboard($updatecontrol, $contextid,$component,$filearea,$itemid,$width=0,$height=0,$qresource="",$vectorcontrol,$vectordata){
+    private function prepareWhiteboard($updatecontrol, $contextid,$component,$filearea,$itemid,$width=0,$height=0,$qresource="",$vectorcontrol="",$vectordata=""){
     	$whiteboardString = \filter_poodll\poodlltools::fetchWhiteboardForSubmission($updatecontrol, $contextid,$component,$filearea,$itemid,$width,$height,$qresource,'','',$vectorcontrol,$vectordata);
     	return $whiteboardString;
     }
