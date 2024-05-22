@@ -1,5 +1,8 @@
 Change List
 =========
+Version 3.1.10 (Build 2024052200)
+Fix for issue when giving a comment/grade if grader info has been set in question settings (fails on M4.4)
+
 Version 3.1.09 (Build 2023051900)
 - Fix for warning message on PHP8
 

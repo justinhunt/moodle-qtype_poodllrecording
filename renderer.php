@@ -72,7 +72,7 @@ class qtype_poodllrecording_renderer extends qtype_renderer {
 
         $question = $qa->get_question();
         return html_writer::nonempty_tag('div', $question->format_text(
-                $question->graderinfo, $question->graderinfo, $qa, 'qtype_poodllrecording',
+                $question->graderinfo, $question->graderinfoformat, $qa, 'qtype_poodllrecording',
             \qtype_poodllrecording\constants::FILEAREA_GRADERINFO, $question->id), array('class' => 'graderinfo'));
     }
 }
