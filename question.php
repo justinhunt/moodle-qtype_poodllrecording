@@ -38,6 +38,14 @@ class qtype_poodllrecording_question extends question_with_responses {
 	public $graderinfo;
     public $graderinfoformat;
 
+    public $qresource;
+    public $boardsize;
+    public $timelimit;
+    public $safesave;
+    public $attachments;
+    public $responsefieldlines;
+
+
     public function make_behaviour(question_attempt $qa, $preferredbehaviour) {
         question_engine::load_behaviour_class('manualgraded');
         return new qbehaviour_manualgraded($qa, $preferredbehaviour);

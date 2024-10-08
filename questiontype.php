@@ -34,6 +34,7 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class qtype_poodllrecording extends question_type {
+
     public function is_manual_graded() {
         return true;
     }
